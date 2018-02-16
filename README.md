@@ -66,7 +66,7 @@ used to control the printer:
   Sends a carriage return to the printer. This prints any characters currently in the print buffer, advances the paper, and returns the print head to its home position.
 
     void printff();
-  Sends a form feed to the printer. This advances the paper and returns the print head to its home position and clears the print buffer without printing any characters. There was a dedicated "PF" key on the calculator to perform this function. It may be desirable to implement a dedicated key on the Arduino controller as well, since this function is used to advance the paper when loading a new paper roll.
+  Sends a form feed to the printer. This advances the paper and returns the print head to its home position without printing any characters. **It does not clear the print buffer.** There was a dedicated "PF" key on the calculator to perform this function. It may be desirable to implement a dedicated key on the Arduino controller as well, since this function is used to advance the paper when loading a new paper roll.
 
     void cancelprint();
   Clears the print buffer, but does not advance the paper or move the print head. This command would typically be used to clear out characters previously sent with print() without printing them.
@@ -82,23 +82,23 @@ Hardware Pin Configuration
 --------------------------
 The calculator requires multiple hardware modifications in order to interface with the Arduino. Also refer to the [photo](../jpg/BoydWiring.jpg) at the bottom of this page.
 
-1. Data Lines D0 - D7
++ Data Lines D0 - D7
 
    The data lines connect to pins 27-34 on U11 (80C49). Instead of connecting the Arduino I/O pins directly to the 80C49, use serial resistors R52-R59. These are needed due to the internal buffer circuit on the "quasi-bidirectional" pins on Port 1 of the 80C49. Portions of the 80C49 firmware create a momentary low-impedance path to Vcc, at the same time that the Arduino may be trying to pull the data lines low. The 3.3K resistors limit the current to a safe level.
    Therefore, cut the resistor leg farther away from U11 on each of R52-R59, and solder wires (and insulate them as the precaution) to each of the freed resistor legs.
-2. /INT (Interrupt) signal
++ /INT (Interrupt) signal
 
    This connects to U11 pin 6. You can either solder directly to pin 6, or remove resistor R60 and solder a wire into the R60 via that is in line with pin 6.
-3. /PF (Form Feed) signal
++ /PF (Form Feed) signal
 
    This connects to pin 1 of connector J3 (previously used to connect the number keypad).
-4. /READY signal
++ /READY signal
 
    This connects to pin 37 of U11. This pin was left unconnected in the calculator, so there are no vias or other alternate connection points -- you need to carefully solder a wire to the pin.
-5. Power (+5V)
++ Power (+5V)
 
    There are multiple points to connect to power; I chose pin 40 on U15.
-6. Ground
++ Ground
 
    There are multiple points to connect GND. I chose to use pin 15 on connector J3.
 
