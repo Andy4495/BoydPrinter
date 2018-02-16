@@ -1,4 +1,5 @@
 /* Library to control Seiko MTP-102 thermal printer.
+   https://gitlab.com/Andy4495/BoydPrinter
 
    1.0.0    02/12/2018  A.T.   Original
 */
@@ -8,11 +9,9 @@
    in the calculator which in turn controls the printer.
    See github, discussion board, olduino web pages
 
-   Interface requires 10 digital out pins and 1 digital input pin.
-
-   Pin Configuration:
-   80C49               ARDUINO
-   ----                -------
+   Interface requires 10 digital out pins and 1 digital input pin,
+   although it is possible to ignore the /READY pin and use one less
+   output pin in exchange to slower printer operation. 
 
    The Arduino code deals with some "nuances" in the 80C49 firmware code:
    1. Arduino runs much faster than 80C49, so need to insert delays to

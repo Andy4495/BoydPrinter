@@ -2,13 +2,10 @@
    Uses Boyd Dimension Calculator as a control interface.
    The Arduino code sends commands to an 80C49 processor
    in the calculator which in turn controls the printer.
-   See github, discussion board, olduino web pages
+   https://gitlab.com/Andy4495/BoydPrinter
+
 
    Interface requires 10 digital out pins and 1 digital input pin.
-
-   Pin Configuration:
-   80C49               ARDUINO
-   ----                -------
 
 */
 #ifndef BOYD_PRINTER
@@ -35,7 +32,6 @@
 
 // If not using /READY pin
 #define NO_READY_PIN   255
-
 
 class BoydPrinter {
 public:
