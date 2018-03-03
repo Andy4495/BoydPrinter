@@ -11,7 +11,7 @@
 
    Interface requires 10 digital out pins and 1 digital input pin,
    although it is possible to ignore the /READY pin and use one less
-   output pin in exchange to slower printer operation. 
+   output pin in exchange to slower printer operation.
 
    The Arduino code deals with some "nuances" in the 80C49 firmware code:
    1. Arduino runs much faster than 80C49, so need to insert delays to
@@ -69,7 +69,7 @@ BoydPrinter::BoydPrinter(byte D0_pin, byte D1_pin, byte D2_pin, byte D3_pin,
     pinMode(ready_in, INPUT);
 }
 
-int BoydPrinter::println(char* s) {
+int BoydPrinter::println(const char* s) {
   int i = 0;
   for (i=0; i < MAX_COLUMNS; i++) {
     if (s[i] == '\0') break;

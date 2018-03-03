@@ -37,7 +37,7 @@ class BoydPrinter {
 public:
   BoydPrinter(byte D0, byte D1, byte D2, byte D3, byte D4, byte D5, byte D6,
               byte D7, byte int_pin, byte PF_pin, byte ready_pin = NO_READY_PIN);
-  int println(char*);
+  int println(const char*);
   void print(char);
   void printcr();
   void printff();
