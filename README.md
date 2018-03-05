@@ -34,20 +34,17 @@ Usage
 -----
 
 Use the constructor to set up the pins used to interface with the calculator.
-A total of 11 output pins and 1 input pin are required. For example,
+A total of 10 output pins and 1 input pin are required. For example,
 
     BoydPrinter myPrinter(2, 3, 4, 5, 6, 7, 8, 9, 15, 16, 14);
 
 The first 8 parameters correspond to output data lines D0 - D7. The final
-three parameters, in order, are: Interrupt output pin, PF (form feed) output pin,
-READY input pin.
+three parameters, in order, are: /INT (interrupt) output pin, PF (form feed) output pin, and
+/READY input pin.
 
-It is possible to use one less I/O pin by ignoring the READY pin. This pin is
+It is possible to use one less I/O pin by ignoring the /READY pin. This pin is
 an input to the Arduino and signals that the 80C49 is ready to receive
-printer data. When ignoring this pin, additional delays are added to the
-code to ensure that the data is properly transferred to the printer. To
-operate the printer in this manner, call the constructor with 11 parameters
-instead of 12 (i.e., leave out the READY pin value):
+printer data. When ignoring this pin, the library adds delays to ensure that the data is properly transferred to the printer. To operate the printer in this manner, call the constructor with 10 parameters instead of 11 (i.e., leave out the READY pin value):
 
     BoydPrinter myPrinter(2, 3, 4, 5, 6, 7, 8, 9, 15, 16);
 
@@ -76,51 +73,73 @@ Character Set
 The printer supports the standard ASCII character set for values 0x20 - 0x7E.
 Control characters 0x0D (carriage return) and 0x18 (cancel) are also supported.
 In addition, an extended character set from 0xA0 - 0xDF is available and prints
-a character map as shown on this [photo](../jpg/ExtendedChars.jpg).
+per the character map as shown here: ![charset photo](jpg/ExtendedChars.jpg).
 
 Hardware Pin Configuration
 --------------------------
-The calculator requires multiple hardware modifications in order to interface with the Arduino. Also refer to the [photo](../jpg/BoydWiring.jpg) at the bottom of this page.
+The calculator requires multiple hardware modifications in order to interface with the Arduino. Also refer to the [photo](jpg/BoydWiring.jpg) in the [hardware][1] section below.
 
 + Data Lines D0 - D7
 
-   The data lines connect to pins 27-34 on U11 (80C49). Instead of connecting the Arduino I/O pins directly to the 80C49, use serial resistors R52-R59. These are needed due to the internal buffer circuit on the "quasi-bidirectional" pins on Port 1 of the 80C49. Portions of the 80C49 firmware create a momentary low-impedance path to Vcc, at the same time that the Arduino may be trying to pull the data lines low. The 3.3K resistors limit the current to a safe level.
-   Therefore, cut the resistor leg farther away from U11 on each of R52-R59, and solder wires (and insulate them as the precaution) to each of the freed resistor legs.
+   The data lines connect to pins 27-34 on U11 (80C49). Remove resistors R52-R59, solder wires into the resistor vias closest to the 80C49, and then place 3.3K serial resistors on an [interface board][1] before connecting the Arduino. Alternatively, you can connect to the  Arduino through the existing 3.3K resistors. This can be done by clipping the far end of resistors R52-R59 and soldering the Arduino wires to the freed resistor legs.
+
+   These serial resistors are needed due to the internal buffer circuit on the "quasi-bidirectional" pins on Port 1 of the 80C49. Portions of the 80C49 firmware create a momentary low-impedance path to Vcc, at the same time that the Arduino may be trying to pull the data lines low. The 3.3K resistors limit the current to a safe level.
+
 + /INT (Interrupt) signal
 
-   This connects to U11 pin 6. You can either solder directly to pin 6, or remove resistor R60 and solder a wire into the R60 via that is in line with pin 6.
+   This connects to U11 pin 6. You can either solder directly to pin 6, or  solder a wire onto the R60 lead that is in line with pin 6. The other side of R60 is tied to +5V and ensures that /INT is inactive while the Arduino boots up and before it sets its digital pin to output mode. Do not remove R60.
+
 + /PF (Form Feed) signal
 
-   This connects to pin 1 of connector J3 (previously used to connect the number keypad).
+   Remove R18 (1K) and connect to the R18 via nearest to pin 24 of U11. Then use a serial 1K resistor on the Arduino interface board, similar to Data Line signals described above. Alternatively, you can cut the end of R18 farther away from U11 and connect the Arduino IO line to the resistor leg. In either case, make sure you have 1K serial resistance between the Arduino output and pin 24 of U11.
+
 + /READY signal
 
    This connects to pin 37 of U11. This pin was left unconnected in the calculator, so there are no vias or other alternate connection points -- you need to carefully solder a wire to the pin.
+
 + Power (+5V)
 
-   There are multiple points to connect to power; I chose pin 40 on U15.
+   There are multiple points to connect to power; I chose pin 14 on U19.
+
 + Ground
 
-   There are multiple points to connect GND. I chose to use pin 15 on connector J3.
+   There are multiple points to connect GND. I chose to use the E2 via, previously connected to the 9V battery battery snap (which I removed).
 
 ### Summary ###
 
      Boyd Printer        Arduino
      ---------------     -------
-     U11, pins 27-34     Data output pins D0 - D7, through series resistors R52 - R59.
+     U11, pins 27-34     Data output pins D0 - D7, through 3.3K series resistor.
      U11, pin 6          /INT (interrupt) output pin
-     J3, pin 1           /PF (form feed) output pin
+     U11, pin 24         /PF (form feed) output pin, through 1K series resistor.
      U11, pin 37         /READY output pin (optional, see "Usage" section above)
-     U15, pin 40         +5V Power. There are other board locations available.
-     J3, pin 15          GND. There are other board locations available.
+     U19, pin 14         +5V Power. There are other board locations available.
+     E2 via              GND. There are other board locations available.
 
 References
 ----------
-+ Hackaday [article] (https://hackaday.com/2017/07/11/cosmac-elf-calculator-gets-new-firmware/#more-264530)
++ Hackaday [article](https://hackaday.com/2017/07/11/cosmac-elf-calculator-gets-new-firmware/#more-264530)
 + Yahoo discussion [group](https://groups.yahoo.com/neo/groups/cosmacelf/conversations/topics/19788)
 + Several articles on [Olduino](https://olduino.wordpress.com) blog: [programming](https://olduino.wordpress.com/2017/04/15/reprogramming-an-1805-based-calculator-in-c/), [printing](https://olduino.wordpress.com/2017/11/05/printing-on-the-boyd-calculator/), [LEDs](https://olduino.wordpress.com/2018/01/24/ugly-but-it-works-segment-addressing-on-the-boyd/)
 + [Pinouts, 80C49 disassembly and register usage](https://github.com/Tek4/COSMAC-Boyd-Calculator)
 
 Hardware
 --------
-Hardware modifications for Arduino interface:
-![Hardware connections](../jpg/BoydWiring.jpg)
+Hardware modifications to the main calculator controller board to interface to Arduino:
+![Hardware connections](jpg/BoydWiring.jpg)
+
+Arduino interface board:
+![Interface board](jpg/InterfaceBoard.jpg)
+
+Connection to Pro Mini:
+![Pro Mini](jpg/ProMini.jpg)
+
+[1]: #Hardware
+
+Signal Timing
+-------------
+The following diagrams show the calculator signal timing between the 1805 and 80C49 -- this timing information was used to implement the Arduino library.
+
+**/INT signal to /READY**: Approximately 43 us for /READY to go inactive once /INT is active, and a total of 267 us before /READY is active from when /INT is initially activated. Note, however, that the 80C49 activates /READY a short period of time before it is actually "ready". Since the ATmega chip on the Arduino runs significantly faster than the 1803, a slight additional delay was added to the Arduino library so that it does not send new data immediately after receiving a /READY signal. ![IntToReady](jpg/IntToReadyTiming.jpg)
+
+**/PF signal to /READY**: /READY goes inactive for about 800 ms after a form feed (/PF). Also note that it takes about 130 ms before /READY goes inactive after receiving a /PF signal. As noted above, /READY does not quite mean "ready", so the Arduino library has a brief delay after receiving a /READY before sending new data. ![PFToReady](jpg/PFtoReadyTiming.jpg)

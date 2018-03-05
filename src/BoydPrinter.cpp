@@ -2,6 +2,7 @@
    https://gitlab.com/Andy4495/BoydPrinter
 
    1.0.0    02/12/2018  A.T.   Original
+   1.0.1    03/03/2018  A.T.   Send a CR if less than full line in println
 */
 /*
    Uses Boyd Dimension Calculator as a control interface.
@@ -75,6 +76,9 @@ int BoydPrinter::println(const char* s) {
     if (s[i] == '\0') break;
     send_byte(s[i]);
   }
+  // Send a carriage return if less than full line sent to printer
+  if (i < MAX_COLUMNS) send_byte(0x0d);
+
   // If not using /READY pin, then delay for printhead to return home
   if (ready_in == NO_READY_PIN)
     delay(FF_DELAY);
