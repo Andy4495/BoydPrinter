@@ -52,12 +52,11 @@ Once you have created a BoydPrinter object, the following methods can be
 used to control the printer:
 
     int println(char* s)
-  Prints the null-terminated string pointed to by s.
-  A maximum of 13 characters are printed, regardless of the actual length of the string. Any characters after the first 13 are ignored.
-  The function returns the actual number of characters printed (not including the null terminator).
+  Prints the null-terminated string pointed to by `s`.
+  A maximum of 13 characters are printed, regardless of the actual length of the string. Any characters after the first 13 are ignored. The function returns the actual number of characters printed (not including the null terminator).
 
     void print(char c);
-  Sends a single character to the printer. This does not automatically cause the character to print, since the printer only prints when it has received 13 characters to fill the line, or if it receives a carriage return -- see printcr() below.
+  Sends a single character to the printer. This does not automatically cause the character to print, since the printer only prints when it has received 13 characters to fill the line, or if it receives a carriage return -- see `printcr()` below.
 
     void printcr();
   Sends a carriage return to the printer. This prints any characters currently in the print buffer, advances the paper, and returns the print head to its home position.
@@ -66,7 +65,9 @@ used to control the printer:
   Sends a form feed to the printer. This advances the paper and returns the print head to its home position without printing any characters. **It does not clear the print buffer.** There was a dedicated "PF" key on the calculator to perform this function. It may be desirable to implement a dedicated key on the Arduino controller as well, since this function is used to advance the paper when loading a new paper roll.
 
     void cancelprint();
-  Clears the print buffer, but does not advance the paper or move the print head. This command would typically be used to clear out characters previously sent with print() without printing them.
+  Clears the print buffer, but does not advance the paper or move the print head. This command would typically be used to clear out characters previously sent with `print()` without printing them.
+
+  The sketch in the `examples` folder uses all of the above functions, and also demonstrates how to use an external PF (Form Feed) button and a serial data interface to send characters to the printer.
 
 Character Set
 -------------
@@ -77,13 +78,13 @@ per the character map as shown here: ![charset photo](jpg/ExtendedChars.jpg).
 
 Hardware Pin Configuration
 --------------------------
-The calculator requires multiple hardware modifications in order to interface with the Arduino. Also refer to the [photo](jpg/BoydWiring.jpg) in the [hardware][1] section below.
+The calculator requires multiple hardware modifications in order to interface with the Arduino. Also refer to the [photo](jpg/BoydWiring.jpg) and the Hardware Details section below.
 
 + Data Lines D0 - D7
 
-   The data lines connect to pins 27-34 on U11 (80C49). Remove resistors R52-R59, solder wires into the resistor vias closest to the 80C49, and then place 3.3K serial resistors on an [interface board][1] before connecting the Arduino. Alternatively, you can connect to the  Arduino through the existing 3.3K resistors. This can be done by clipping the far end of resistors R52-R59 and soldering the Arduino wires to the freed resistor legs.
+   The data lines connect to pins 27-34 on U11 (80C49). Remove resistors R52-R59, solder wires into the resistor vias closest to the 80C49, and then place 3.3K series resistors on an [interface board](jpg/InterfaceBoard.jpg) before connecting the Arduino. Alternatively, you can connect to the  Arduino through the existing 3.3K resistors. This can be done by clipping the far end of resistors R52-R59 and soldering the Arduino wires to the freed resistor legs.
 
-   These serial resistors are needed due to the internal buffer circuit on the "quasi-bidirectional" pins on Port 1 of the 80C49. Portions of the 80C49 firmware create a momentary low-impedance path to Vcc, at the same time that the Arduino may be trying to pull the data lines low. The 3.3K resistors limit the current to a safe level.
+   These series resistors are needed due to the internal buffer circuit on the "quasi-bidirectional" pins on Port 1 of the 80C49. Portions of the 80C49 firmware create a momentary low-impedance path to Vcc, at the same time that the Arduino may be trying to pull the data lines low. The 3.3K resistors limit the current to a safe level.
 
 + /INT (Interrupt) signal
 
@@ -91,7 +92,7 @@ The calculator requires multiple hardware modifications in order to interface wi
 
 + /PF (Form Feed) signal
 
-   Remove R18 (1K) and connect to the R18 via nearest to pin 24 of U11. Then use a serial 1K resistor on the Arduino interface board, similar to Data Line signals described above. Alternatively, you can cut the end of R18 farther away from U11 and connect the Arduino IO line to the resistor leg. In either case, make sure you have 1K serial resistance between the Arduino output and pin 24 of U11.
+   Remove R18 (1K) and connect to the R18 via nearest to pin 24 of U11. Then use a series 1K resistor on the Arduino interface board, similar to Data Line signals described above. Alternatively, you can cut the end of R18 farther away from U11 and connect the Arduino I/O line to the resistor leg. In either case, make sure you have 1K series resistance between the Arduino output and pin 24 of U11.
 
 + /READY signal
 
@@ -105,7 +106,7 @@ The calculator requires multiple hardware modifications in order to interface wi
 
    There are multiple points to connect GND. I chose to use the E2 via, previously connected to the 9V battery battery snap (which I removed).
 
-### Summary ###
+### Pin Summary ###
 
      Boyd Printer        Arduino
      ---------------     -------
@@ -123,18 +124,16 @@ References
 + Several articles on [Olduino](https://olduino.wordpress.com) blog: [programming](https://olduino.wordpress.com/2017/04/15/reprogramming-an-1805-based-calculator-in-c/), [printing](https://olduino.wordpress.com/2017/11/05/printing-on-the-boyd-calculator/), [LEDs](https://olduino.wordpress.com/2018/01/24/ugly-but-it-works-segment-addressing-on-the-boyd/)
 + [Pinouts, 80C49 disassembly and register usage](https://github.com/Tek4/COSMAC-Boyd-Calculator)
 
-Hardware
---------
+Hardware Details
+----------------
 Hardware modifications to the main calculator controller board to interface to Arduino:
 ![Hardware connections](jpg/BoydWiring.jpg)
 
-Arduino interface board:
+Interface board (mounted in battery compartment):
 ![Interface board](jpg/InterfaceBoard.jpg)
 
 Connection to Pro Mini:
 ![Pro Mini](jpg/ProMini.jpg)
-
-[1]: #Hardware
 
 Signal Timing
 -------------
