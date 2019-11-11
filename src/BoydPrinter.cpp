@@ -1,5 +1,5 @@
 /* Library to control Seiko MTP-102 thermal printer.
-   https://gitlab.com/Andy4495/BoydPrinter
+   https://github.com/Andy4495/BoydPrinter
 
    1.0.0    02/12/2018  A.T.   Original
    1.0.1    03/03/2018  A.T.   Send a CR if less than full line in println

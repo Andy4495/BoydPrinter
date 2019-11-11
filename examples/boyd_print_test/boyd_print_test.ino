@@ -1,5 +1,5 @@
 /* Example program to demonstrate BoydPrinter library functions.
- * https://gitlab.com/Andy4495/BoydPrinter
+ * https://github.com/Andy4495/BoydPrinter
  *
  * 02/16/2018 - A.T. - Original
  * 03/04/2018 - A.T. - Updated with PF and Serial input example
