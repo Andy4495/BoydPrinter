@@ -15,7 +15,7 @@ has a 1988 date code), and a small quantity was available for purchase
 from [BG Micro](http://www.bgmicro.com) in early 2017.
 
 Although my main interest in the calculator was for its Siemens DL440 "bubble"
-LEDs and the thermal printer, others [hobbyists](https://groups.yahoo.com/neo/groups/cosmacelf/conversations/topics/19788)
+LEDs and the thermal printer, other [hobbyists](https://groups.io/g/cosmacelf/topic/30342705)
 were interested in the RCA 1805 CPU -- a successor to the [1802 chip](https://en.wikipedia.org/wiki/RCA_1802).
 
 Based on some very interesting reverse-engineering by the 1805 enthusiasts,
@@ -120,7 +120,7 @@ The calculator requires multiple hardware modifications in order to interface wi
 References
 ----------
 + Hackaday [article](https://hackaday.com/2017/07/11/cosmac-elf-calculator-gets-new-firmware/#more-264530)
-+ Yahoo discussion [group](https://groups.yahoo.com/neo/groups/cosmacelf/conversations/topics/19788)
++ Groups.io discussion [group](https://groups.io/g/cosmacelf/topic/30342705)
 + Several articles on [Olduino](https://olduino.wordpress.com) blog: [programming](https://olduino.wordpress.com/2017/04/15/reprogramming-an-1805-based-calculator-in-c/), [printing](https://olduino.wordpress.com/2017/11/05/printing-on-the-boyd-calculator/), [LEDs](https://olduino.wordpress.com/2018/01/24/ugly-but-it-works-segment-addressing-on-the-boyd/)
 + [Pinouts, 80C49 disassembly and register usage](https://github.com/Tek4/COSMAC-Boyd-Calculator)
 
