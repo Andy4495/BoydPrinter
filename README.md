@@ -74,15 +74,15 @@ Character Set
 The printer supports the standard ASCII character set for values 0x20 - 0x7E.
 Control characters 0x0D (carriage return) and 0x18 (cancel) are also supported.
 In addition, an extended character set from 0xA0 - 0xDF is available and prints
-per the character map as shown here: ![charset photo](jpg/ExtendedChars.jpg).
+per the character map as shown here: ![charset photo](extras/jpg/ExtendedChars.jpg).
 
 Hardware Pin Configuration
 --------------------------
-The calculator requires multiple hardware modifications in order to interface with the Arduino. Also refer to the [photo](jpg/BoydWiring.jpg) and the Hardware Details section below.
+The calculator requires multiple hardware modifications in order to interface with the Arduino. Also refer to the [photo](extras/jpg/BoydWiring.jpg) and the Hardware Details section below.
 
 + Data Lines D0 - D7
 
-   The data lines connect to pins 27-34 on U11 (80C49). Remove resistors R52-R59, solder wires into the resistor vias closest to the 80C49, and then place 3.3K series resistors on an [interface board](jpg/InterfaceBoard.jpg) before connecting the Arduino. Alternatively, you can connect to the  Arduino through the existing 3.3K resistors. This can be done by clipping the far end of resistors R52-R59 and soldering the Arduino wires to the freed resistor legs.
+   The data lines connect to pins 27-34 on U11 (80C49). Remove resistors R52-R59, solder wires into the resistor vias closest to the 80C49, and then place 3.3K series resistors on an [interface board](extras/jpg/InterfaceBoard.jpg) before connecting the Arduino. Alternatively, you can connect to the  Arduino through the existing 3.3K resistors. This can be done by clipping the far end of resistors R52-R59 and soldering the Arduino wires to the freed resistor legs.
 
    These series resistors are needed due to the internal buffer circuit on the "quasi-bidirectional" pins on Port 1 of the 80C49. Portions of the 80C49 firmware create a momentary low-impedance path to Vcc, at the same time that the Arduino may be trying to pull the data lines low. The 3.3K resistors limit the current to a safe level.
 
@@ -127,18 +127,18 @@ References
 Hardware Details
 ----------------
 Hardware modifications to the main calculator controller board to interface to Arduino:
-![Hardware connections](jpg/BoydWiring.jpg)
+![Hardware connections](extras/jpg/BoydWiring.jpg)
 
 Interface board (mounted in battery compartment):
-![Interface board](jpg/InterfaceBoard.jpg)
+![Interface board](extras/jpg/InterfaceBoard.jpg)
 
 Connection to Pro Mini:
-![Pro Mini](jpg/ProMini.jpg)
+![Pro Mini](extras/jpg/ProMini.jpg)
 
 Signal Timing
 -------------
 The following diagrams show the calculator signal timing between the 1805 and 80C49 -- this timing information was used to implement the Arduino library.
 
-**/INT signal to /READY**: Approximately 43 us for /READY to go inactive once /INT is active, and a total of 267 us before /READY is active from when /INT is initially activated. Note, however, that the 80C49 activates /READY a short period of time before it is actually "ready". Since the ATmega chip on the Arduino runs significantly faster than the 1803, a slight additional delay was added to the Arduino library so that it does not send new data immediately after receiving a /READY signal. ![IntToReady](jpg/IntToReadyTiming.jpg)
+**/INT signal to /READY**: Approximately 43 us for /READY to go inactive once /INT is active, and a total of 267 us before /READY is active from when /INT is initially activated. Note, however, that the 80C49 activates /READY a short period of time before it is actually "ready". Since the ATmega chip on the Arduino runs significantly faster than the 1803, a slight additional delay was added to the Arduino library so that it does not send new data immediately after receiving a /READY signal. ![IntToReady](extras/jpg/IntToReadyTiming.jpg)
 
-**/PF signal to /READY**: /READY goes inactive for about 800 ms after a form feed (/PF). Also note that it takes about 130 ms before /READY goes inactive after receiving a /PF signal. As noted above, /READY does not quite mean "ready", so the Arduino library has a brief delay after receiving a /READY before sending new data. ![PFToReady](jpg/PFtoReadyTiming.jpg)
+**/PF signal to /READY**: /READY goes inactive for about 800 ms after a form feed (/PF). Also note that it takes about 130 ms before /READY goes inactive after receiving a /PF signal. As noted above, /READY does not quite mean "ready", so the Arduino library has a brief delay after receiving a /READY before sending new data. ![PFToReady](extras/jpg/PFtoReadyTiming.jpg)
