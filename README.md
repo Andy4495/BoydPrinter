@@ -145,7 +145,9 @@ The following diagrams show the calculator signal timing between the 1805 and 80
 
 License
 -------
-The software and other files in this repository are released under what is commonly called the [MIT License][100]. See the file [`LICENSE.txt`][101] in this repository.
+The software and other files in this [repository][103] are Copyright [Andreas Taylor][102] and released under what is commonly called the [MIT License][100]. See the file [`LICENSE.txt`][101] in this repository.
 
 [100]: https://choosealicense.com/licenses/mit/
 [101]: ./LICENSE.txt
+[102]: https://github.com/Andy4495
+[103]: https://github.com/Andy4495/BoydPrinter/
