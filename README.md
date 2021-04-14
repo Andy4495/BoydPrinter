@@ -142,3 +142,10 @@ The following diagrams show the calculator signal timing between the 1805 and 80
 **/INT signal to /READY**: Approximately 43 us for /READY to go inactive once /INT is active, and a total of 267 us before /READY is active from when /INT is initially activated. Note, however, that the 80C49 activates /READY a short period of time before it is actually "ready". Since the ATmega chip on the Arduino runs significantly faster than the 1803, a slight additional delay was added to the Arduino library so that it does not send new data immediately after receiving a /READY signal. ![IntToReady](extras/jpg/IntToReadyTiming.jpg)
 
 **/PF signal to /READY**: /READY goes inactive for about 800 ms after a form feed (/PF). Also note that it takes about 130 ms before /READY goes inactive after receiving a /PF signal. As noted above, /READY does not quite mean "ready", so the Arduino library has a brief delay after receiving a /READY before sending new data. ![PFToReady](extras/jpg/PFtoReadyTiming.jpg)
+
+License
+-------
+The software and other files in this repository are released under what is commonly called the [MIT License][100]. See the file [`LICENSE.txt`][101] in this repository.
+
+[100]: https://choosealicense.com/licenses/mit/
+[101]: ./LICENSE.txt
