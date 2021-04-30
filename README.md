@@ -1,5 +1,4 @@
-BoydPrinter Library
-====================
+# BoydPrinter Library
 
 This library is designed to work with the Seiko MTP-120 thermal printer
 that is part of the "Boyd Dimension Calculator". It will only work with
@@ -30,8 +29,7 @@ deal with 5V<->3.3V level-shifing. In fact, level-shifting should not be
 required at all if using the "ignore /READY signal" configuration, since the
 output lines at 3.3V should be sufficient to indicate a high level to the 80C49.
 
-Usage
------
+## Usage
 
 Use the constructor to set up the pins used to interface with the calculator.
 A total of 10 output pins and 1 input pin are required. For example,
@@ -69,15 +67,15 @@ used to control the printer:
 
   The sketch in the `examples` folder uses all of the above functions, and also demonstrates how to use an external PF (Form Feed) button and a serial data interface to send characters to the printer.
 
-Character Set
--------------
+## Character Set
+
 The printer supports the standard ASCII character set for values 0x20 - 0x7E.
 Control characters 0x0D (carriage return) and 0x18 (cancel) are also supported.
 In addition, an extended character set from 0xA0 - 0xDF is available and prints
 per the character map as shown here: ![charset photo](extras/jpg/ExtendedChars.jpg).
 
-Hardware Pin Configuration
---------------------------
+## Hardware Pin Configuration
+
 The calculator requires multiple hardware modifications in order to interface with the Arduino. Also refer to the [photo](extras/jpg/BoydWiring.jpg) and the Hardware Details section below.
 
 + Data Lines D0 - D7
@@ -106,7 +104,7 @@ The calculator requires multiple hardware modifications in order to interface wi
 
    There are multiple points to connect GND. I chose to use the E2 via, previously connected to the 9V battery battery snap (which I removed).
 
-### Pin Summary ###
+### Pin Summary
 
      Boyd Printer        Arduino
      ---------------     -------
@@ -117,15 +115,15 @@ The calculator requires multiple hardware modifications in order to interface wi
      U19, pin 14         +5V Power. There are other board locations available.
      E2 via              GND. There are other board locations available.
 
-References
-----------
+## References
+
 + Hackaday [article](https://hackaday.com/2017/07/11/cosmac-elf-calculator-gets-new-firmware/#more-264530)
 + Groups.io discussion [group](https://groups.io/g/cosmacelf/topic/30342705)
 + Several articles on [Olduino](https://olduino.wordpress.com) blog: [programming](https://olduino.wordpress.com/2017/04/15/reprogramming-an-1805-based-calculator-in-c/), [printing](https://olduino.wordpress.com/2017/11/05/printing-on-the-boyd-calculator/), [LEDs](https://olduino.wordpress.com/2018/01/24/ugly-but-it-works-segment-addressing-on-the-boyd/)
 + [Pinouts, 80C49 disassembly and register usage](https://github.com/Tek4/COSMAC-Boyd-Calculator)
 
-Hardware Details
-----------------
+## Hardware Details
+
 Hardware modifications to the main calculator controller board to interface to Arduino:
 ![Hardware connections](extras/jpg/BoydWiring.jpg)
 
@@ -135,19 +133,19 @@ Interface board (mounted in battery compartment):
 Connection to Pro Mini:
 ![Pro Mini](extras/jpg/ProMini.jpg)
 
-Signal Timing
--------------
+## Signal Timing
+
 The following diagrams show the calculator signal timing between the 1805 and 80C49 -- this timing information was used to implement the Arduino library.
 
 **/INT signal to /READY**: Approximately 43 us for /READY to go inactive once /INT is active, and a total of 267 us before /READY is active from when /INT is initially activated. Note, however, that the 80C49 activates /READY a short period of time before it is actually "ready". Since the ATmega chip on the Arduino runs significantly faster than the 1803, a slight additional delay was added to the Arduino library so that it does not send new data immediately after receiving a /READY signal. ![IntToReady](extras/jpg/IntToReadyTiming.jpg)
 
 **/PF signal to /READY**: /READY goes inactive for about 800 ms after a form feed (/PF). Also note that it takes about 130 ms before /READY goes inactive after receiving a /PF signal. As noted above, /READY does not quite mean "ready", so the Arduino library has a brief delay after receiving a /READY before sending new data. ![PFToReady](extras/jpg/PFtoReadyTiming.jpg)
 
-License
--------
+## License
+
 The software and other files in this [repository][103] are Copyright [Andreas Taylor][102] and released under what is commonly called the [MIT License][100]. See the file [`LICENSE.txt`][101] in this repository.
 
 [100]: https://choosealicense.com/licenses/mit/
 [101]: ./LICENSE.txt
 [102]: https://github.com/Andy4495
-[103]: https://github.com/Andy4495/BoydPrinter/
+[200]: https://github.com/Andy4495/BoydPrinter/
