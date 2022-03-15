@@ -1,6 +1,6 @@
 # BoydPrinter Library
 
-[![Check Markdown Links](https://github.com/Andy4495/BoydPrinter/actions/workflows/action.yml/badge.svg)](https://github.com/Andy4495/BoydPrinter/actions/workflows/action.yml)
+[![Check Markdown Links](https://github.com/Andy4495/BoydPrinter/actions/workflows/CheckMarkdownLinks.yml/badge.svg)](https://github.com/Andy4495/BoydPrinter/actions/workflows/CheckMarkdownLinks.yml)
 
 This library is designed to work with the Seiko MTP-120 thermal printer
 that is part of the "Boyd Dimension Calculator". It will only work with
