@@ -13,7 +13,7 @@ through the 80C49.
 
 The calculator was developed in the 1980s (the printer in my calculator
 has a 1988 date code), and a small quantity was available for purchase
-from [BG Micro](http://www.bgmicro.com) in early 2017.
+from BG Micro in early 2017.
 
 Although my main interest in the calculator was for its Siemens DL440 "bubble"
 LEDs and the thermal printer, other [hobbyists](https://groups.io/g/cosmacelf/topic/30342705)
@@ -151,3 +151,5 @@ The software and other files in this repository are released under what is commo
 [101]: ./LICENSE.txt
 [102]: https://github.com/Andy4495
 [200]: https://github.com/Andy4495/BoydPrinter/
+
+[//]: # (Previous BG Micro link that now gives 404 error: http://www.bgmicro.com)
