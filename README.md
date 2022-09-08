@@ -150,7 +150,6 @@ The software and other files in this repository are released under what is commo
 
 [100]: https://choosealicense.com/licenses/mit/
 [101]: ./LICENSE.txt
-[102]: https://github.com/Andy4495
-[200]: https://github.com/Andy4495/BoydPrinter/
+[//]: # ([200]: https://github.com/Andy4495/BoydPrinter/)
 
 [//]: # (Previous BG Micro link that now gives 404 error: http://www.bgmicro.com)
