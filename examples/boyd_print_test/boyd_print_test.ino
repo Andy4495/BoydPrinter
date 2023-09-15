@@ -18,9 +18,9 @@ unsigned long last_pf_time = 0;
 
 
 // how much serial data we expect before a newline
-const unsigned int MAX_INPUT = 50;
+const unsigned int _MAX_INPUT_ = 50;
 
-char input_line[MAX_INPUT];
+char input_line[_MAX_INPUT_];
 
 void setup() {
   int ret;
@@ -101,7 +101,7 @@ void processIncomingByte (const byte inByte)
 
     default:
       // keep adding if not full ... allow for terminating null byte
-      if (input_pos < (MAX_INPUT - 1)) {
+      if (input_pos < (_MAX_INPUT_ - 1)) {
         input_line [input_pos++] = inByte;
       }
       break;
